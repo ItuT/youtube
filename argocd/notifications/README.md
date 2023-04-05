@@ -1,32 +1,32 @@
-# Notification
+# notification
 
 https://argocd-notifications.readthedocs.io/en/stable/
 
-Учитываем неточности в документации на сайте :)
+We take into account inaccuracies in the documentation on the site :)
 
-## Telegram chat
+## telegram chat
     
-В телеграмме ищем бот BotFather.
+In the telegram, we are looking for the BotFather bot.
 
-Создаём своего бота (/newbot). Получаем token. Сохраняем его в secret.
+Create your own bot (/newbot). We get a token. We save it in secret.
 
-В телеграмм создаём группу и добавляем в нее бота.
+In telegrams, create a group and add a bot to it.
 
-От своего пользователя пишем в группу тестовое сообщение.
+From our user, we write a test message to the group.
 
-Запрашиваем информацию по боту.
+We request information on the bot.
 
-    curl https://api.telegram.org/botТУТ_ТОКЕН/getUpdates
+    curl https://api.telegram.org/botHERE_TOKEN/getUpdates
 
-Ищем что то типа:
+Looking for something like:
 
     "chat":{"id":-1009999999999,
 
-Это ID чата, который в дальнейшем подставим в ConfigMap
+This is the chat ID, which we will later substitute in the ConfigMap
 
-## Конфигурация notification.
+## Configuration notification.
 
-Сначала создаём secret в котором поместим токен.
+First, we create a secret in which we place the token.
 
 ```yaml
 apiVersion: v1
@@ -35,19 +35,19 @@ metadata:
   name: argocd-notifications-secret
 type: Opaque
 stringData:
-  telegram-token: "тут пишем токен"
+  telegram-token: "write the token here"
 ```
     
     kubectl -n argocd apply -f secret.yaml
 
-Деплоим приложение notification.
+Let's deploy the notification application.
 
-* Или в командной строке:
+* Or on the command line:
 
     kubectl -n argocd apply -f 00-rbac.yaml -f 01-configs.yaml -f 02-deployment.yaml
 
-* или в ArgoCD 00-notification.yaml
+* or in ArgoCD 00-notification.yaml
 
-## Ссылка на видео.
+## Link to video.
 
 [<img src="https://img.youtube.com/vi/ayHXgjc0guM/maxresdefault.jpg" width="50%">](https://youtu.be/ayHXgjc0guM)
